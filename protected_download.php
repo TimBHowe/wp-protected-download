@@ -69,6 +69,7 @@ class ProtectedDownload {
 		}
 	}
 
+	//Add a file id field to the media library to allow users to add it to the short code
 	function media_template_updates(){ ?>
 		<script type="text/html" id="tmpl-my-custom-attachment-display-setting">
 			<label class="setting">
@@ -81,7 +82,7 @@ class ProtectedDownload {
 		jQuery(document).ready(function(){
 			// merge default gallery settings template with yours
 			wp.media.view.Settings.AttachmentDisplay = wp.media.view.Settings.AttachmentDisplay.extend({
-
+				//re-render the attachment options with the new id field
 				render: function() {
 					var attachment = this.options.attachment;
 					if ( attachment ) {
@@ -106,6 +107,7 @@ class ProtectedDownload {
 	<?php
 	}
 
+	//Add [protected] shortcode
 	function protect_shortcode($atts, $content=null ) {
 		//Set attributes for shortcode
 		extract( shortcode_atts( array(
@@ -120,6 +122,7 @@ class ProtectedDownload {
 		return '<a class="protected-file" title="Request '.$file_info->post_title.'" href="'.$link_href.'">' . $content . '</a>';
 	}
 
+	//Add [attachment_url] shortcode - to link to the file using the attachment ID. Used on the thank you page or user email notification
 	function unprotect_shortcode($atts, $content=null ) {
 		//Set attributes for shortcode
 		extract( shortcode_atts( array(
@@ -136,6 +139,7 @@ class ProtectedDownload {
 		return '<a class="unprotected-file" title="Download '.$file_name.'" href="'.wp_get_attachment_url($file_id).'">' . $content . '</a>';
 	}
 
+	//Add [referral_link] shortcode - to link to back to the original page that had the protected link on it.
 	function referral_back_shortcode($atts, $content=null ) {
 		//Set attributes for shortcode
 		extract( shortcode_atts( array(
